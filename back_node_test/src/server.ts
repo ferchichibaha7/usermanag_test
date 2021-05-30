@@ -33,7 +33,20 @@ const server = app.listen(port, () =>
   console.log(`Server started on port ${port}`)
 );
 
-// create admin if not exist on start server 
+
+
+
+
+
+
+
+
+
+
+
+// create admin if not exist on start server
+///////////////////////////////////////////
+
 function upsert(values, condition) {
   return User
       .findOne({ where: condition })
@@ -58,5 +71,17 @@ upsert({
   "isActive": true,
   "askForPass": false
 }, { username: 'admin' })
+
+
+
+
+
+
+
+
+
+
+
+
 
 export default server;
