@@ -31,19 +31,21 @@ export class AddEditUserComponent implements OnInit {
     this.isAddMode = !this.id;
 
     this.myform = this.formBuilder.group({
-      email: ['', Validators.required, Validators.email],
-      username: ['', Validators.required],
-      firstname: ['', Validators.required],
-      lastname: ['', [Validators.required]],
-      isActive: ['', Validators.required],
-      askForPass: ['', Validators.required],
-      password: ['', [Validators.minLength(8)]],
+      email: ['', [Validators.required, Validators.email]],
+      username: ['', [Validators.required]],
+      firstname: ['',  [Validators.required]],
+      lastname: ['',  [Validators.required]],
+      isActive: ['',  [Validators.required]],
+      askForPass: ['',  [Validators.required]],
+      password: ['', [Validators.minLength(8),this.isAddMode ? Validators.required : Validators.nullValidator]],
     });
 
     if (!this.isAddMode) {
-    //  this.userService.getById(this.id)
-     //     .pipe(first())
-      //    .subscribe(x => this.myform.patchValue(x));
+      this.userService.getById(this.id)
+          .pipe(first())
+          .subscribe(x => {
+            this.myform.patchValue(x)
+          });
   }
   }
 
@@ -79,5 +81,18 @@ export class AddEditUserComponent implements OnInit {
         }
     });
   }
-  updateUser() {}
+  updateUser() {
+    console.log(this.myform.value);
+
+    this.userService.update(this.id, this.myform.value)
+    .pipe(first())
+    .subscribe({
+        next: () => {
+          this.router.navigate(['/userslist']);
+        },
+        error: error => {
+            this.loading = false;
+        }
+    });
+  }
 }

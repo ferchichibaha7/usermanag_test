@@ -19,6 +19,8 @@ const validateOptions =   [
 router.post( "/create",auth,admin,validateOptions,(...params) => ctrl.create(...params));
 router.get( "/list",auth,(...params) => ctrl.findAllUsers(...params));
 router.delete( "/delete/:id",auth,admin,(...params) => ctrl.deleteUser(...params));
+router.get( "/:id",auth,admin,(...params) => ctrl.findOneUser(...params));
+router.put( "/:id",auth,admin,validateOptions,(...params) => ctrl.updateUser(...params));
 
 
 export default router;

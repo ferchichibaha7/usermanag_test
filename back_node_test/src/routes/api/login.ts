@@ -57,7 +57,7 @@ router.post(
         return res.status(HttpStatusCodes.BAD_REQUEST).json({
           errors: [
             {
-              msg: "Account is disactivated"
+              msg: "Account is disabled"
             }
           ]
         });

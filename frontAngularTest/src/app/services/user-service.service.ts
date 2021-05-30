@@ -25,6 +25,14 @@ export class UserServiceService {
     );
   }
 
+  update(id,params){
+    return this.http.put<any>(`${environment.apiUrl}/api/user/${id}`,params).pipe(
+      map((resonse) => {
+        return resonse.result;
+      })
+    );
+  }
+
   listusers() {
     return this.http.get<any>(`${environment.apiUrl}/api/user/list`).pipe(
       map((resonse) => {
@@ -32,6 +40,14 @@ export class UserServiceService {
       })
     );
   }
+
+  getById(id: string) {
+    return this.http.get<any>(`${environment.apiUrl}/api/user/${id}`).pipe(
+      map((resonse) => {
+        return resonse.result;
+      })
+    );
+}
 
   deleteuser(id:number) {
     return this.http.delete<any>(`${environment.apiUrl}/api/user/delete/${id}`).pipe(
