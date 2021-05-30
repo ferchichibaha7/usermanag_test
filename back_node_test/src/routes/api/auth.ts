@@ -40,7 +40,7 @@ router.post(
     const { emailOrUsername, password } = req.body;
     try {
       let user = {};
-      if(emailOrUsername.includes("@"))
+      if(validateEmail(emailOrUsername))
           user = await User.findOne({ where:{ email : emailOrUsername }});
       else
           user = await User.findOne({ where:{ username : emailOrUsername }});
@@ -85,5 +85,11 @@ router.post(
     }
   }
 );
+
+
+function validateEmail(email) {
+  const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  return re.test(String(email).toLowerCase());
+}
 
 export default router;
