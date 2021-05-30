@@ -16,7 +16,7 @@
           </thead>
           <tbody>
             <tr *ngFor="let user of usersFromApi">
-              <td *ngIf="isAdmin" scope="row">
+              <td  scope="row">
                 <span [ngStyle]="{'background-color': user.isActive? '#66bb6a' : '#f44336'}" class="dot"></span>
                 {{user.username}}
               </td>
