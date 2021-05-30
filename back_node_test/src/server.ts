@@ -1,5 +1,6 @@
 import bodyParser from "body-parser";
 import express from "express";
+import cors from "cors";
 
 import { sequelize, connectAuthenticate } from "../config/database";
 import login from "./routes/api/login";
@@ -12,6 +13,7 @@ connectAuthenticate();
 sequelize.sync();
 
 // Express configuration
+app.use(cors());
 app.set("port", process.env.PORT || 5000);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));

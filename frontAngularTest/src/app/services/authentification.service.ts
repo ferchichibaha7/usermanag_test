@@ -28,8 +28,12 @@ login(emailOrUsername: string, password: string) {
                 localStorage.setItem('UserObj', JSON.stringify(user));
                 this.UserObjSubject.next(user);
             }
-
             return user;
         }));
+}
+
+logout() {
+  localStorage.removeItem('UserObj');
+  this.UserObjSubject.next(null);
 }
 }

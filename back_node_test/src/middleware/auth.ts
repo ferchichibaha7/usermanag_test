@@ -7,10 +7,9 @@ export default function(req, res, next) {
   try {
   // Get token from header
   const token = req.headers.authorization.split(" ")[1];
-
   // Verify token
     const payload: Payload | any = jwt.verify(token, process.env.SECRET);
-    req.userId = payload.userId;
+    req.userId = payload.id;
     next();
   } catch (err) {
     res

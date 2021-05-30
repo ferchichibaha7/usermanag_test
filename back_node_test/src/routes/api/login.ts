@@ -3,7 +3,7 @@ import { Router } from "express";
 import { check, validationResult } from "express-validator/check";
 import HttpStatusCodes from "http-status-codes";
 import jwt from "jsonwebtoken";
-
+import * as _ from 'underscore';
 import Payload from "../../types/Payload";
 import User from "../../models/User";
 import auth from "../../middleware/auth";
@@ -17,7 +17,6 @@ router.get("/", auth, async (req, res) => {
     let user   = await User.findOne({ where:{ id : req['userId'] },attributes: {exclude: ['password']}});
     res.json({ message: "User retrieved", result: user })
   } catch (err) {
-    console.error(err.message);
     res.status(HttpStatusCodes.INTERNAL_SERVER_ERROR).send("Server Error");
   }
 
@@ -54,6 +53,16 @@ router.post(
         });
       }
 
+      if (!user['isActive']) {
+        return res.status(HttpStatusCodes.BAD_REQUEST).json({
+          errors: [
+            {
+              msg: "Account is disactivated"
+            }
+          ]
+        });
+      }
+
       const isMatch = bcrypt.compareSync(password, user['password']);
 
       if (!isMatch) {
@@ -67,6 +76,7 @@ router.post(
       }
 
       const payload: Payload = {
+        id: user['id'],
         firstname: user['firstname'],
         lastname:  user['lastname'],
         username:  user['username'],
@@ -82,7 +92,9 @@ router.post(
         { expiresIn: process.env.jwtExpiration },
         (err, token) => {
           if (err) throw err;
-          res.json({ token });
+          let toret = _.clone(payload);
+          toret['token'] = token;
+          res.json(toret);
         }
       );
     } catch (err) {
