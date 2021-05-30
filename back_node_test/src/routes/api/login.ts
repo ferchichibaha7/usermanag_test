@@ -67,7 +67,13 @@ router.post(
       }
 
       const payload: Payload = {
-        userId: user['id']
+        firstname: user['firstname'],
+        lastname:  user['lastname'],
+        username:  user['username'],
+        email:  user['email'],
+        isActive: user['isActive'],
+        askForPass: user['askForPass'],
+        isAdmin: user['isAdmin']
       };
 
       jwt.sign(

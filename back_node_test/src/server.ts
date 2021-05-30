@@ -2,7 +2,7 @@ import bodyParser from "body-parser";
 import express from "express";
 
 import { sequelize, connectAuthenticate } from "../config/database";
-import auth from "./routes/api/auth";
+import login from "./routes/api/login";
 import user from "./routes/api/user";
 
 const app = express();
@@ -21,7 +21,7 @@ app.get("/", (_req, res) => {
   res.send("API Running");
 });
 
-app.use("/api/auth", auth);
+app.use("/api/auth", login);
 app.use("/api/user", user);
 
 const port = app.get("port");

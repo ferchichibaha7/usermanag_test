@@ -1,4 +1,3 @@
-import config from "config";
 import HttpStatusCodes from "http-status-codes";
 import jwt from "jsonwebtoken";
 
