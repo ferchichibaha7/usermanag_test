@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthentificationService } from '@app/services/authentification.service';
 import { UserServiceService } from '@app/services/user-service.service';
-import { first } from 'rxjs/operators';
+import { first, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-add-edit-user',
@@ -18,6 +18,7 @@ export class AddEditUserComponent implements OnInit {
   isAddMode: boolean;
   returnUrl: string;
   error = '';
+  errorslist = []
   constructor(
     private formBuilder: FormBuilder,
     private authService: AuthentificationService,
@@ -32,11 +33,11 @@ export class AddEditUserComponent implements OnInit {
 
     this.myform = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
-      username: ['', [Validators.required]],
+      username: ['', [Validators.required,Validators.pattern(this.validPattern)]],
       firstname: ['',  [Validators.required]],
       lastname: ['',  [Validators.required]],
-      isActive: ['',  [Validators.required]],
-      askForPass: ['',  [Validators.required]],
+      isActive: [true,  [Validators.required]],
+      askForPass: [true,  [Validators.required]],
       password: ['', [Validators.minLength(8),this.isAddMode ? Validators.required : Validators.nullValidator]],
     });
 
@@ -55,6 +56,7 @@ export class AddEditUserComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
+    console.log(this.f.email.errors);
 
     // stop here if form is invalid
     if (this.myform.invalid) {
@@ -77,13 +79,13 @@ export class AddEditUserComponent implements OnInit {
             this.router.navigate(['/userslist']);
         },
         error: error => {
+          if (error && error.error && error.error.errors )
+          this.errorslist =error.error.errors;
             this.loading = false;
         }
     });
   }
   updateUser() {
-    console.log(this.myform.value);
-
     this.userService.update(this.id, this.myform.value)
     .pipe(first())
     .subscribe({
@@ -91,8 +93,13 @@ export class AddEditUserComponent implements OnInit {
           this.router.navigate(['/userslist']);
         },
         error: error => {
+            if (error && error.error && error.error.errors )
+            this.errorslist =error.error.errors;
+
             this.loading = false;
         }
     });
   }
+
+  validPattern = "^([a-zA-Z0-9]+)$";
 }
