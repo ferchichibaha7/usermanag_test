@@ -2,6 +2,7 @@ import User from '../models/User';
 import bcrypt from "bcryptjs";
 import { validationResult } from "express-validator/check";
 import HttpStatusCodes from "http-status-codes";
+import { Op } from 'sequelize';
 
 
 export class userController {
@@ -76,4 +77,16 @@ public async create(...params){
           }
 
         }
+
+
+        public  findAllUsers = (...params) => {
+          const[req, res, next] = params;
+
+          User.findAll( {  where:{ id : { [Op.not]: req['userId']} }, attributes: {exclude: ['password']}}).then((users) => {
+            res.json({ message: "Users retrieved", result: users });
+          });
+        };
+
+
+
 }

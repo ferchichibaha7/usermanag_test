@@ -1,0 +1,28 @@
+.dot {
+  height: 10px;
+  width: 10px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+}
+.card-title{
+  color: #aa0469 !important;
+}
+td {
+  border: none !important;
+}
+th{
+  color: black !important;
+  font-weight: 600 !important;
+
+}
+tr:hover:not(.head) {
+  cursor: pointer;
+ background-color: rgb(248, 248, 248) !important;
+}
+.edit{
+  background-color: #005eb8 !important;
+}
+.delete{
+  background-color: #aa0469 !important;
+}

@@ -4,16 +4,24 @@ import { environment } from '@environments/environment';
 import { map } from 'rxjs/operators';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class UserServiceService {
-
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   currentUser() {
-    return this.http.get<any>(`${environment.apiUrl}/api/auth`)
-        .pipe(map(resonse => {
-            return resonse.result;
-        }));
-}
+    return this.http.get<any>(`${environment.apiUrl}/api/auth`).pipe(
+      map((resonse) => {
+        return resonse.result;
+      })
+    );
+  }
+
+  listusers() {
+    return this.http.get<any>(`${environment.apiUrl}/api/user/list`).pipe(
+      map((resonse) => {
+        return resonse.result;
+      })
+    );
+  }
 }

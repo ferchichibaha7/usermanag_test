@@ -1,6 +1,7 @@
 import { userController } from '../../controllers/user.controller';
 import { Router } from "express";
 import { check } from "express-validator/check";
+import auth from '../../middleware/auth';
 
 
 const router: Router = Router();
@@ -15,5 +16,7 @@ const validateOptions =   [
 ];
 
 router.post( "/create",validateOptions,(...params) => ctrl.create(...params));
+router.get( "/list",auth,(...params) => ctrl.findAllUsers(...params));
+
 
 export default router;

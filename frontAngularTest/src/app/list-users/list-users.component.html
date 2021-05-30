@@ -1,0 +1,36 @@
+<div class="card mt-4 mb-4">
+
+  <div class="card-body">
+    <h4 class="card-title">Users</h4>
+      <ul *ngIf="usersFromApi">
+        <table class="table">
+          <thead>
+            <tr class="head">
+              <th scope="col">Username</th>
+              <th scope="col">First Name</th>
+              <th scope="col">Last Name</th>
+              <th scope="col">Email</th>
+              <th scope="col">Creation date</th>
+              <th *ngIf="isAdmin" scope="col">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let user of usersFromApi">
+              <td *ngIf="isAdmin" scope="row">
+                <span [ngStyle]="{'background-color': user.isActive? '#66bb6a' : '#f44336'}" class="dot"></span>
+                {{user.username}}
+              </td>
+              <td>{{user.firstname}}</td>
+              <td>{{user.lastname}}</td>
+              <td>{{user.email}}</td>
+              <td>{{user.createdAt | date:'short'}}</td>
+              <td *ngIf="isAdmin"><button type="button" class="btn btn-danger btn-sm delete">Delete</button>
+                <button type="button" class="btn btn-info btn-sm edit">Edit</button>
+              </td>
+
+            </tr>
+          </tbody>
+        </table>
+      </ul>
+  </div>
+</div >

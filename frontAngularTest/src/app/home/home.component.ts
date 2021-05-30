@@ -28,4 +28,8 @@ export class HomeComponent implements OnInit {
     });
   }
 
+  get isAdmin() {
+    return this.currentUser && this.currentUser.isAdmin ;
+}
+
 }
