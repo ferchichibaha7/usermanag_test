@@ -25,3 +25,6 @@ tr:hover:not(.head) {
 .delete{
   background-color: #aa0469 !important;
 }
+tr {
+  transition: all 0.6s;
+}

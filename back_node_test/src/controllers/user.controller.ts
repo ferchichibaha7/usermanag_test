@@ -27,7 +27,6 @@ public async create(...params){
        firstname,
        isActive,
        askForPass,
-       isAdmin
        } = req.body;
     try {
         let user = await User.findOne({ where:{ username : username }});
@@ -66,7 +65,7 @@ public async create(...params){
              password: hashed,
              isActive:isActive,
              askForPass:askForPass,
-             isAdmin:isAdmin
+             isAdmin:false
           }
            )
             res.json({ message: "User Registered" });
@@ -84,6 +83,15 @@ public async create(...params){
 
           User.findAll( {  where:{ id : { [Op.not]: req['userId']} }, attributes: {exclude: ['password']}}).then((users) => {
             res.json({ message: "Users retrieved", result: users });
+          });
+        };
+
+
+        public deleteUser = (...params) => {
+          const[req, res, next] = params;
+          const { id } = req.params;
+          User.destroy({ where: { id: id } }).then(() => {
+            res.json({ message: `User ${id} deleted` });
           });
         };
 

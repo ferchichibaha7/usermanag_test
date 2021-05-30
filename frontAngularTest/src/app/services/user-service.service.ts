@@ -17,10 +17,26 @@ export class UserServiceService {
     );
   }
 
+  create(params){
+    return this.http.post<any>(`${environment.apiUrl}/api/user/create`,params).pipe(
+      map((resonse) => {
+        return resonse.message;
+      })
+    );
+  }
+
   listusers() {
     return this.http.get<any>(`${environment.apiUrl}/api/user/list`).pipe(
       map((resonse) => {
         return resonse.result;
+      })
+    );
+  }
+
+  deleteuser(id:number) {
+    return this.http.delete<any>(`${environment.apiUrl}/api/user/delete/${id}`).pipe(
+      map((resonse) => {
+        return resonse.message;
       })
     );
   }

@@ -8,13 +8,15 @@ import { HomeComponent } from './home/home.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { JwtInterceptor } from './shared/jwt.interceptor';
 import { ListUsersComponent } from './list-users/list-users.component';
+import { AddEditUserComponent } from './add-edit-user/add-edit-user.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     HomeComponent,
-    ListUsersComponent
+    ListUsersComponent,
+    AddEditUserComponent
   ],
   imports: [
     BrowserModule,

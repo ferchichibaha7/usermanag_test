@@ -10,6 +10,8 @@ export default function(req, res, next) {
   // Verify token
     const payload: Payload | any = jwt.verify(token, process.env.SECRET);
     req.userId = payload.id;
+    req.isAdmin = payload.isAdmin;
+
     next();
   } catch (err) {
     res

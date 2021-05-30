@@ -1,9 +1,14 @@
 <div class="card mt-4 mb-4">
 
   <div class="card-body">
-    <h4 class="card-title">Users</h4>
+    <div class="d-flex justify-content-between">
+    <h4 class="card-title">Users <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span></h4>
+    <button routerLink="/add" type="button" class="btn btn-outline-info btn-sm  float-right">Create new user</button>
+  </div>
+  <div *ngIf="usersFromApi && usersFromApi.length == 0">Users list is empty ...</div>
+
       <ul *ngIf="usersFromApi">
-        <table class="table">
+        <table *ngIf="usersFromApi.length > 0" class="table">
           <thead>
             <tr class="head">
               <th scope="col">Username</th>
@@ -24,8 +29,8 @@
               <td>{{user.lastname}}</td>
               <td>{{user.email}}</td>
               <td>{{user.createdAt | date:'short'}}</td>
-              <td *ngIf="isAdmin"><button type="button" class="btn btn-danger btn-sm delete">Delete</button>
-                <button type="button" class="btn btn-info btn-sm edit">Edit</button>
+              <td *ngIf="isAdmin"><button (click)="delete(user.id)" type="button" class="btn btn-danger btn-sm delete">Delete <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span></button>
+                <button type="button" class="btn btn-info btn-sm edit" routerLink="/edit/{{user.id}}">Edit</button>
               </td>
 
             </tr>

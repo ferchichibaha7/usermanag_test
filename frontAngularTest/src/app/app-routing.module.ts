@@ -1,3 +1,4 @@
+import { AddEditUserComponent } from './add-edit-user/add-edit-user.component';
 import { ListUsersComponent } from './list-users/list-users.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
@@ -14,6 +15,15 @@ const routes: Routes = [
 {
   path: 'userslist',
   component: ListUsersComponent,
+  canActivate: [AuthGuard]
+},
+{ path: 'add',
+  component: AddEditUserComponent,
+  canActivate: [AuthGuard]
+
+},
+{ path: 'edit/:id',
+  component: AddEditUserComponent,
   canActivate: [AuthGuard]
 },
 {

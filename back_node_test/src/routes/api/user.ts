@@ -2,6 +2,7 @@ import { userController } from '../../controllers/user.controller';
 import { Router } from "express";
 import { check } from "express-validator/check";
 import auth from '../../middleware/auth';
+import admin from '../../middleware/admin';
 
 
 const router: Router = Router();
@@ -15,8 +16,9 @@ const validateOptions =   [
   ).isLength({ min: 8 })
 ];
 
-router.post( "/create",validateOptions,(...params) => ctrl.create(...params));
+router.post( "/create",auth,admin,validateOptions,(...params) => ctrl.create(...params));
 router.get( "/list",auth,(...params) => ctrl.findAllUsers(...params));
+router.delete( "/delete/:id",auth,admin,(...params) => ctrl.deleteUser(...params));
 
 
 export default router;
