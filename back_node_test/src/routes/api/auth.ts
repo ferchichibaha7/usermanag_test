@@ -1,6 +1,5 @@
 import bcrypt from "bcryptjs";
-import config from "config";
-import { Router, Response } from "express";
+import { Router } from "express";
 import { check, validationResult } from "express-validator/check";
 import HttpStatusCodes from "http-status-codes";
 import jwt from "jsonwebtoken";
@@ -28,7 +27,6 @@ router.get("/", auth, async (req, res) => {
 router.post(
   "/",
   [
-    check("email", "Please include a valid email").isEmail(),
     check("password", "Password is required").exists()
   ],
   async (req, res) => {
@@ -39,10 +37,13 @@ router.post(
         .json({ errors: errors.array() });
     }
 
-    const { email, password } = req.body;
+    const { emailOrUsername, password } = req.body;
     try {
-      let user   = await User.findOne({ where:{ email : email }});
-
+      let user = {};
+      if(emailOrUsername.includes("@"))
+          user = await User.findOne({ where:{ email : emailOrUsername }});
+      else
+          user = await User.findOne({ where:{ username : emailOrUsername }});
       if (!user) {
         return res.status(HttpStatusCodes.BAD_REQUEST).json({
           errors: [
