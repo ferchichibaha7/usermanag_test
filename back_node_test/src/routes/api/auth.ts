@@ -25,7 +25,6 @@ router.get("/", auth, async (req, res) => {
 });
 
 
-// @access  Public
 router.post(
   "/",
   [

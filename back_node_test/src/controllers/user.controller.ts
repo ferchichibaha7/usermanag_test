@@ -18,24 +18,56 @@ public async create(...params){
         .json({ errors: errors.array() });
         }
     
-    const { email, password } = req.body;
+    const { 
+       email,
+       password,
+       username,
+       lastname,
+       firstname,
+       isActive,
+       askForPass,
+       isAdmin
+       } = req.body;
     try {
-        let user = await User.findOne({ where:{ email : email }});
-    
+        let user = await User.findOne({ where:{ username : username }});
         if (user) {
-        return res.status(HttpStatusCodes.BAD_REQUEST).json({
-            errors: [
-                {
-                  msg: "User already exists"
-                }
-              ]
-            });
-          }
+          return res.status(HttpStatusCodes.BAD_REQUEST).json({
+              errors: [
+                  {
+                    msg: "username already used"
+                  }
+                ]
+              });
+            }
+        else{
+          user = await User.findOne({ where:{ email : email }});
+          if (user) {
+            return res.status(HttpStatusCodes.BAD_REQUEST).json({
+                errors: [
+                    {
+                      msg: "email already used"
+                    }
+                  ]
+                });
+              }
+        }
+      
         
         const salt = await bcrypt.genSalt(10);
         const hashed = await bcrypt.hash(password, salt);
     
-         await User.create({email: email, password: hashed})
+         await User.create(
+           {
+             username:username,
+             lastname:lastname,
+             firstname:firstname,
+             email: email,
+             password: hashed,
+             isActive:isActive,
+             askForPass:askForPass,
+             isAdmin:isAdmin
+          }
+           )
             res.json({ message: "User Registered" });
       
         } catch (err) {
