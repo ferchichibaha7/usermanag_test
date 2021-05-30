@@ -24,7 +24,7 @@ export class ListUsersComponent implements OnInit {
     this.loading = true;
     this.userService.listusers().pipe(take(1)).subscribe(users => {
         this.loading = false;
-        this.usersFromApi = users;
+        this.usersFromApi = users.reverse();;
     });
   }
 
