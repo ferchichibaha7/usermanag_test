@@ -70,6 +70,12 @@ export class userController {
   public updateUser = (...params) => {
     const [req, res, next] = params;
     const { id } = req.params;
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res
+        .status(HttpStatusCodes.BAD_REQUEST)
+        .json({ errors: errors.array() });
+    }
     const {
       email,
       password,

@@ -15,7 +15,7 @@ export class AuthGuard implements CanActivate {
         const UserObj = this.authService.UserObjValue;
         if (UserObj) {
             // check if route is restricted for normal users
-            if (route.data && route.data.isAdmin) {
+            if (route.data && route.data.isAdmin && UserObj.isAdmin != true) {
                 this.router.navigate(['/']);
                 return false;
             }

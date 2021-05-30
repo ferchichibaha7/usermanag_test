@@ -19,12 +19,14 @@ const routes: Routes = [
 },
 { path: 'add',
   component: AddEditUserComponent,
-  canActivate: [AuthGuard]
+  canActivate: [AuthGuard],
+  data: { isAdmin: true}
 
 },
 { path: 'edit/:id',
   component: AddEditUserComponent,
-  canActivate: [AuthGuard]
+  canActivate: [AuthGuard],
+  data: { isAdmin: true}
 },
 {
     path: 'login',
