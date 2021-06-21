@@ -2,7 +2,7 @@ import HttpStatusCodes from "http-status-codes";
 
 export default function(req, res, next) {
 
-    let isAdmin = req.isAdmin
+    let isAdmin   = req.isAdmin
     if(isAdmin)
     next();
     else
