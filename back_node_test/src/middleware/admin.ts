@@ -1,6 +1,6 @@
 import HttpStatusCodes from "http-status-codes";
 
-export default function(req, res, next) {
+export default  function(req, res, next) {
 
     let isAdmin   = req.isAdmin
     if(isAdmin)
